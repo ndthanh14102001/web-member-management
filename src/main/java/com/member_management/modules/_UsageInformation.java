@@ -26,6 +26,10 @@ import java.util.Date;
 @Table(name = "thongtinsd")
 public class _UsageInformation implements Serializable {
 
+    @Column(name = "TGDatCho")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date tGDatCho;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -126,6 +130,14 @@ public class _UsageInformation implements Serializable {
     @Override
     public String toString() {
         return "com.example.demo.modules._UsageInformation[ maTT=" + maTT + " ]";
+    }
+
+    public Date getTGDatCho() {
+        return tGDatCho;
+    }
+
+    public void setTGDatCho(Date tGDatCho) {
+        this.tGDatCho = tGDatCho;
     }
     
 }
