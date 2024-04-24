@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 import com.member_management.repository.UsageInformationRepository;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,7 @@ public class UsageInformationService {
                 .collect(Collectors.toList());
     }
 
-    public void bookDevice(String deviceId) throws Exception {
+    public void bookDevice(String deviceId, LocalDateTime bookingTime) throws Exception {
         if (isAvailableDevice(deviceId)) {
             _Device device = new _Device(deviceId);
             _Member member = new _Member("1120480015");
@@ -39,7 +40,7 @@ public class UsageInformationService {
             _UsageInformation usageInformation = new _UsageInformation();
             usageInformation.setMaTV(member);
             usageInformation.setMaTB(device);
-            usageInformation.setTGDatCho(new Date());
+            usageInformation.setTGDatCho(Timestamp.valueOf(bookingTime));
             usageInformationRepository.save(usageInformation);
         } else {
             throw new Exception(deviceId + " đã được đặt chỗ hoặc đã được mượn");
@@ -50,7 +51,7 @@ public class UsageInformationService {
         List<_UsageInformation> busyInformation = usageInformationRepository.getBusyInformationByMaTB(deviceId);
         return busyInformation.isEmpty();
     }
-    
+
     public void deleteUnusedRecordsAfterOneHour() {
         LocalDateTime oneHourAgo = LocalDateTime.now().minusHours(1);
         List<_UsageInformation> unusedRecords = usageInformationRepository.findUnusedRecordsBeforeTime(oneHourAgo);

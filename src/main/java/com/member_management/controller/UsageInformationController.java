@@ -2,6 +2,7 @@ package com.member_management.controller;
 
 import com.member_management.service.DeviceService;
 import com.member_management.service.UsageInformationService;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -32,11 +34,13 @@ public class UsageInformationController {
     }
 
     @PostMapping("/book/{deviceId}")
-    public String bookDevice(@PathVariable String deviceId, RedirectAttributes redirectAttributes) {
+    public String bookDevice(@PathVariable String deviceId, @RequestParam("bookingTime") String bookingTime, RedirectAttributes redirectAttributes) {
         try {
-            usageInformationService.bookDevice(deviceId);
+            LocalDateTime localDateTime = LocalDateTime.parse(bookingTime);
+            usageInformationService.bookDevice(deviceId, localDateTime);
             redirectAttributes.addFlashAttribute("successMessage", "Đặt chỗ thành công!");
         } catch (Exception e) {
+            e.printStackTrace();
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
         return "redirect:/booking-device";
