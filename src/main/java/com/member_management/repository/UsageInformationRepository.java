@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import java.util.Date;
 
 public interface UsageInformationRepository extends JpaRepository<_UsageInformation, Integer> {
 
@@ -17,7 +18,10 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
             )
             AND u.maTB NOT IN (
                 SELECT u.maTB FROM _UsageInformation u
-                WHERE u.tGDatCho IS NOT NULL
+                WHERE u.tGDatCho IS NOT NULL 
+                AND YEAR(u.tGDatCho) = YEAR(:tGDatCho) 
+                AND MONTH(u.tGDatCho) = MONTH(:tGDatCho) 
+                AND DAY(u.tGDatCho) = DAY(:tGDatCho)
             )
             GROUP BY u.maTB
             UNION
@@ -27,7 +31,7 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
                 SELECT u.maTB.maTB FROM _UsageInformation u 
                 WHERE u.maTB.maTB IS NOT NULL
             )""")
-    List<Object[]> getAvailableDevices();
+    List<Object[]> getAvailableDevices(@Param("tGDatCho") Date tGDatCho);
 
     @Query("""
             SELECT u.maTB.maTB,u.maTB.tenTB FROM _UsageInformation u
@@ -38,6 +42,9 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
             AND u.maTB NOT IN (
                 SELECT u.maTB FROM _UsageInformation u
                 WHERE u.tGDatCho IS NOT NULL
+                AND YEAR(u.tGDatCho) = YEAR(:tGDatCho) 
+                AND MONTH(u.tGDatCho) = MONTH(:tGDatCho) 
+                AND DAY(u.tGDatCho) = DAY(:tGDatCho)
             )
             AND u.maTB.tenTB like %:tenTB%
             GROUP BY u.maTB, u.maTB.tenTB
@@ -50,21 +57,25 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
             )
             AND d.tenTB like %:tenTB%
            """)
-    List<Object[]> getAvailableDevicesByTenTB(@Param("tenTB") String tenTB);
+    List<Object[]> getAvailableDevicesByTenTB(@Param("tenTB") String tenTB, @Param("tGDatCho") Date tGDatCho);
 
     @Query("""
            SELECT u FROM _UsageInformation u
            WHERE u.tGDatCho IS NOT NULL 
+           AND YEAR(u.tGDatCho) = YEAR(:tGDatCho) 
+           AND MONTH(u.tGDatCho) = MONTH(:tGDatCho) 
+           AND DAY(u.tGDatCho) = DAY(:tGDatCho)
            AND u.tGMuon IS NULL 
            AND u.tGTra IS NULL
            AND u.maTB.maTB = :maTB
            UNION
            SELECT u FROM _UsageInformation u
            WHERE u.tGMuon IS NOT NULL 
+           AND u.tGMuon IS NOT NULL
            AND u.tGTra IS NULL
            AND u.maTB.maTB = :maTB
            """)
-    List<_UsageInformation> getBusyInformationByMaTB(@Param("maTB") String maTB);
+    List<_UsageInformation> getBusyInformationByMaTB(@Param("maTB") String maTB, @Param("tGDatCho") Date tGDatCho);
 
     @Query("SELECT u FROM _UsageInformation u WHERE u.tGDatCho <= :time AND u.tGMuon IS NULL")
     List<_UsageInformation> findUnusedRecordsBeforeTime(@Param("time") LocalDateTime time);

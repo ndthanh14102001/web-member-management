@@ -10,19 +10,21 @@
     <body>
 
         <div class="container">
-            <form id="bookingForm" class="d-flex align-items-end mb-3 mt-3" method="post">
+            <h2>Đặt chỗ</h2>
+            <form id="bookingForm" class="d-flex align-items-end mb-3 mt-3" method="Get" th:unless="${bookingTime}" onSubmit="submitForm(event)">
                 <div class="me-2">
-                    <label for="modalBookingTime" class="form-label">Thời gian đặt chỗ</label>
-                    <input type="datetime-local" id="modalBookingTime"  class="form-control" name="bookingTime"
-                           min="" required>
+                    <label for="bookingTime" class="form-label">Thời gian đặt chỗ</label>
+                    <input type="datetime-local" id="bookingTime"  class="form-control" name="bookingTime"
+                           min="" th:value="${bookingTime}" required>
                 </div>
                 <button class="btn btn-primary" type="submit">Đồng ý</button>
             </form>
 
-            <form class="d-flex align-items-end mb-3 mt-3">
+            <form class="d-flex align-items-end mb-3 mt-3" th:if="${bookingTime}">
                 <div class="me-2">
                     <label for="search" class="form-label">Tên thiết bị</label>
                     <input type="text" class="form-control" id="search" aria-describedby="search" name="search">
+                    <input type="hidden"  th:value="${bookingTime}" name="bookingTime"/>
                 </div>
                 <button class="btn btn-primary" type="submit">Tìm kiếm</button>
             </form>
@@ -48,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table">
+            <table class="table" th:if="${bookingTime}">
                 <thead>
                     <tr>
                         <th>Mã thiết bị</th>
@@ -63,33 +65,16 @@
                         <td th:text="${device[1]}"></td>
 
                         <td>
-                            <button type="button" class="btn btn-primary" onclick="openModal(this)" th:device-id="${device[0]}">Đặt chỗ</button>
+                            <form method="POST" action="/book">
+                                <input type="hidden"  th:value="${device[0]}" name="deviceId"/>
+                                <input type="hidden"  th:value="${bookingTime}" name="bookingTime"/>
+                                <button type="submit" class="btn btn-primary" >Đặt chỗ</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-        <!--        <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="bookingModalLabel">Chọn thời gian đặt chỗ</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="bookingForm" method="post">
-                                    <input type="datetime-local" id="modalBookingTime" name="bookingTime"
-                                           min="" required>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                <button type="button" class="btn btn-primary" onclick="submitForm()">Đặt chỗ</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -107,17 +92,16 @@
                 modal.show();
             }
 
-            function submitForm() {
-                var selectedDateTime = new Date(document.getElementById('modalBookingTime').value);
+            function submitForm(event) {
+
+                var selectedDateTime = new Date(document.getElementById('bookingTime').value);
 
                 var minimumDateTime = new Date();
                 minimumDateTime.setMinutes(minimumDateTime.getMinutes() + 30);
                 if (selectedDateTime < minimumDateTime) {
                     alert('Thời gian đặt chỗ phải sau ít nhất 30 phút so với thời gian hiện tại');
-                    return;
+                    event.preventDefault();
                 }
-
-                document.getElementById('bookingForm').submit();
             }
         </script>
     </body>

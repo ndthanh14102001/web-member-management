@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 
 import com.member_management.repository.UsageInformationRepository;
 import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,36 +26,48 @@ public class UsageInformationService {
         this.usageInformationRepository = usageInformationRepository;
     }
 
-    public List<Object[]> getAvailableDevicesSortedByMaTB(String tenTB) {
+    public List<Object[]> getAvailableDevicesSortedByMaTB(String tenTB, String tGDatChoISOFormat) {
 
-        List<Object[]> devices;
-        if (tenTB == null || "".equals(tenTB)) {
-            devices = usageInformationRepository.getAvailableDevices();
-        } else {
-            devices = usageInformationRepository.getAvailableDevicesByTenTB(tenTB);
+        List<Object[]> devices = new ArrayList<>();
+        if (tGDatChoISOFormat != null) {
+            Date tGDatCho = convertISOStringToDate(tGDatChoISOFormat);
+
+            if (tenTB == null || "".equals(tenTB)) {
+                devices = usageInformationRepository.getAvailableDevices(tGDatCho);
+            } else {
+                devices = usageInformationRepository.getAvailableDevicesByTenTB(tenTB, tGDatCho);
+            }
         }
         return devices.stream()
                 .sorted(Comparator.comparing(device -> (String) device[0]))
                 .collect(Collectors.toList());
     }
 
-    public void bookDevice(String deviceId, LocalDateTime bookingTime) throws Exception {
-        if (isAvailableDevice(deviceId)) {
+    private Date convertISOStringToDate(String isoString) {
+        LocalDateTime localDateTime = LocalDateTime.parse(isoString);
+        Date tGDatCho = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        return tGDatCho;
+    }
+
+    public void bookDevice(String deviceId, String bookingTime) throws Exception {
+        LocalDateTime localDateTime = LocalDateTime.parse(bookingTime);
+        Date tGDatCho = convertISOStringToDate(bookingTime);
+        if (isAvailableDevice(deviceId,tGDatCho)) {
             _Device device = new _Device(deviceId);
             _Member member = new _Member("1120480015");
 
             _UsageInformation usageInformation = new _UsageInformation();
             usageInformation.setMaTV(member);
             usageInformation.setMaTB(device);
-            usageInformation.setTGDatCho(Timestamp.valueOf(bookingTime));
+            usageInformation.setTGDatCho(Timestamp.valueOf(localDateTime));
             usageInformationRepository.save(usageInformation);
         } else {
             throw new Exception(deviceId + " đã được đặt chỗ hoặc đã được mượn");
         }
     }
 
-    private boolean isAvailableDevice(String deviceId) {
-        List<_UsageInformation> busyInformation = usageInformationRepository.getBusyInformationByMaTB(deviceId);
+    private boolean isAvailableDevice(String deviceId, Date tGDatCho) {
+        List<_UsageInformation> busyInformation = usageInformationRepository.getBusyInformationByMaTB(deviceId, tGDatCho);
         return busyInformation.isEmpty();
     }
 
