@@ -30,6 +30,29 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
     List<Object[]> getAvailableDevices();
 
     @Query("""
+            SELECT u.maTB.maTB,u.maTB.tenTB FROM _UsageInformation u
+            WHERE u.maTB NOT IN (
+                SELECT u.maTB FROM _UsageInformation u
+                WHERE u.tGVao IS NULL AND u.tGMuon IS NOT NULL AND u.tGTra IS NULL
+            )
+            AND u.maTB NOT IN (
+                SELECT u.maTB FROM _UsageInformation u
+                WHERE u.tGDatCho IS NOT NULL
+            )
+            AND u.maTB.tenTB like %:tenTB%
+            GROUP BY u.maTB, u.maTB.tenTB
+            UNION
+            SELECT d.maTB, d.tenTB
+            FROM _Device d
+            WHERE d.maTB NOT IN (
+                SELECT u.maTB.maTB FROM _UsageInformation u 
+                WHERE u.maTB.maTB IS NOT NULL
+            )
+            AND d.tenTB like %:tenTB%
+           """)
+    List<Object[]> getAvailableDevicesByTenTB(@Param("tenTB") String tenTB);
+
+    @Query("""
            SELECT u FROM _UsageInformation u
            WHERE u.tGDatCho IS NOT NULL 
            AND u.tGMuon IS NULL 

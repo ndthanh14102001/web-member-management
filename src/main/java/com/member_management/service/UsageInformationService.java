@@ -24,9 +24,14 @@ public class UsageInformationService {
         this.usageInformationRepository = usageInformationRepository;
     }
 
-    public List<Object[]> getAvailableDevicesSortedByMaTB() {
+    public List<Object[]> getAvailableDevicesSortedByMaTB(String tenTB) {
 
-        List<Object[]> devices = usageInformationRepository.getAvailableDevices();
+        List<Object[]> devices;
+        if (tenTB == null || "".equals(tenTB)) {
+            devices = usageInformationRepository.getAvailableDevices();
+        } else {
+            devices = usageInformationRepository.getAvailableDevicesByTenTB(tenTB);
+        }
         return devices.stream()
                 .sorted(Comparator.comparing(device -> (String) device[0]))
                 .collect(Collectors.toList());

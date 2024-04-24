@@ -27,8 +27,8 @@ public class UsageInformationController {
     }
 
     @GetMapping("/booking-device")
-    public String getAllUsageInformation(Model model) {
-        List<Object[]> devices = usageInformationService.getAvailableDevicesSortedByMaTB();
+    public String getAllUsageInformation(Model model, @RequestParam(value = "search", required = false) String search) {
+        List<Object[]> devices = usageInformationService.getAvailableDevicesSortedByMaTB(search);
         model.addAttribute("devices", devices);
         return "booking-device";
     }
