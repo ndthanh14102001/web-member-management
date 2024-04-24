@@ -1,5 +1,6 @@
 package com.member_management.service;
 
+import com.member_management.modules._Device;
 import com.member_management.repository.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,5 +14,7 @@ public class DeviceService {
     public DeviceService(DeviceRepository deviceRepository) {
         this.deviceRepository = deviceRepository;
     }
-
+    public _Device findById(String id) {
+        return deviceRepository.findByMaTB(id);
+    }
 }
