@@ -14,5 +14,12 @@ public class MemberService {
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
+    public void Register(_Member m) {
+        memberRepository.insertMember(m.getMaTV(), m.getHoTen(), m.getEmail(), m.getKhoa(), m.getNganh(), m.getSdt(), m.getPassword());
+    }
+
+    public _Member Login(String id, String password){
+        memberRepository.Signin(id, password);
+    }
 
 }
