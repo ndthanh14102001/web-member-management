@@ -1,6 +1,7 @@
 package com.member_management.controller;
 
-import com.member_management.service.DeviceService;
+import com.member_management.service.MemberService;
+import com.member_management.modules._Member;
 import com.member_management.service.UsageInformationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +46,14 @@ public class MemberController {
                              RedirectAttributes redirectAttributes,
                              HttpServletRequest request) {
         try {
-            _Member m = new _Menber();
+            _Member m = new _Member();
             m.setMaTV(id);
             m.setHoTen(name);
             m.setEmail(email);
             m.setKhoa(department);
             m.setNganh(branch);
             m.setSdt(phone);
-            m.setPassword(password)
+            m.setPassword(password);
             memberService.Register(m);
             redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công");
             return "redirect:/signin";

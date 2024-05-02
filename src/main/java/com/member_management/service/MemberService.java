@@ -1,5 +1,6 @@
 package com.member_management.service;
 
+import com.member_management.modules._Member;
 import com.member_management.repository.DeviceRepository;
 import com.member_management.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class MemberService {
     }
 
     public _Member Login(String id, String password){
-        memberRepository.Signin(id, password);
+        return memberRepository.Signin(id, password);
     }
 
 }
