@@ -2,6 +2,8 @@ package com.member_management.repository;
 
 import com.member_management.modules._Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface MemberRepository extends JpaRepository<_Member, Integer> {
     @Query("INSERT INTO _Member (maTV, hoTen, email, khoa, nganh, sdt, password) VALUES (:id, :name, :email, :department, :branch, :phone, :password)")
@@ -14,5 +16,5 @@ public interface MemberRepository extends JpaRepository<_Member, Integer> {
                       @Param("password") String password
                       );
     @Query("SELECT m FROM _Member m WHERE m.maTV = :maTV AND m.password = :password")
-    public _Memeber Signin(@Param("maTV") String id, @Param("password") String password);
+    public _Member Signin(@Param("maTV") String id, @Param("password") String password);
 }
