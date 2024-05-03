@@ -2,49 +2,58 @@ package com.member_management.controller;
 
 import com.member_management.service.MemberService;
 import com.member_management.modules._Member;
-import com.member_management.service.UsageInformationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MemberController {
+
     private final MemberService memberService;
+
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
 
+    @GetMapping("/signin")
+    public String Signin() {
+        return "/signin";
+    }
+
     @PostMapping("/signin")
-    public String Signin(@RequestParam("Id") String id,
-                             @RequestParam("Password") String password,
-                             RedirectAttributes redirectAttributes,
-                             HttpServletRequest request) {
-        if(memberService.Login(id, password) != null){
+    public String Signin(@RequestParam("maTV") String id,
+            @RequestParam("password") String password,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
+        if (memberService.Login(id, password) != null) {
             redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công");
             return "redirect:/home";
-        }else{
+        } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Tài khoản không đúng");
             return "redirect:/signin";
         }
     }
 
+    @GetMapping("/signup")
+    public String Signup() {
+        return "/signup";
+    }
+
     @PostMapping("/signup")
-    public String Signup(@RequestParam("Id") String id,
-                             @RequestParam("Name") String name,
-                             @RequestParam("Email") String email,
-                             @RequestParam("Department") String department,
-                             @RequestParam("Branch") String branch,
-                             @RequestParam("Phone") String phone,
-                             @RequestParam("Password") String password,
-                             RedirectAttributes redirectAttributes,
-                             HttpServletRequest request) {
+    public String Signup(@RequestParam("maTV") String id,
+            @RequestParam("hoten") String name,
+            @RequestParam("email") String email,
+            @RequestParam("khoa") String department,
+            @RequestParam("nganh") String branch,
+            @RequestParam("sdt") String phone,
+            @RequestParam("password") String password,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
         try {
             _Member m = new _Member();
             m.setMaTV(id);
@@ -60,6 +69,13 @@ public class MemberController {
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("maTV", id);
+            redirectAttributes.addFlashAttribute("hoten", name);
+            redirectAttributes.addFlashAttribute("email", email);
+            redirectAttributes.addFlashAttribute("khoa", department);
+            redirectAttributes.addFlashAttribute("nganh", branch);
+            redirectAttributes.addFlashAttribute("sdt", phone);
+            redirectAttributes.addFlashAttribute("password", password);
             return "redirect:/signup";
         }
     }

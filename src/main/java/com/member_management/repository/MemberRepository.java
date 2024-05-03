@@ -1,11 +1,15 @@
 package com.member_management.repository;
 
 import com.member_management.modules._Member;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MemberRepository extends JpaRepository<_Member, Integer> {
+    @Modifying
+    @Transactional
     @Query("INSERT INTO _Member (maTV, hoTen, email, khoa, nganh, sdt, password) VALUES (:id, :name, :email, :department, :branch, :phone, :password)")
     void insertMember(@Param("id") String id,
                       @Param("name") String name,
