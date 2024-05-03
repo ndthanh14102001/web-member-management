@@ -49,12 +49,12 @@ public class UsageInformationService {
         return tGDatCho;
     }
 
-    public void bookDevice(String deviceId, String bookingTime) throws Exception {
+    public void bookDevice(String memberId, String deviceId, String bookingTime) throws Exception {
         LocalDateTime localDateTime = LocalDateTime.parse(bookingTime);
         Date tGDatCho = convertISOStringToDate(bookingTime);
-        if (isAvailableDevice(deviceId,tGDatCho)) {
+        if (isAvailableDevice(deviceId, tGDatCho)) {
             _Device device = new _Device(deviceId);
-            _Member member = new _Member("1120480015");
+            _Member member = new _Member(memberId);
 
             _UsageInformation usageInformation = new _UsageInformation();
             usageInformation.setMaTV(member);

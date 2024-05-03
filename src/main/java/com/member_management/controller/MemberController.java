@@ -3,6 +3,7 @@ package com.member_management.controller;
 import com.member_management.service.MemberService;
 import com.member_management.modules._Member;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,10 @@ public class MemberController {
             @RequestParam("password") String password,
             RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
-        if (memberService.Login(id, password) != null) {
+        _Member loggedMember = memberService.Login(id, password);
+        if (loggedMember != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("loggedInMember", loggedMember);
             redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công");
             return "redirect:/home";
         } else {

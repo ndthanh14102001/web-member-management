@@ -1,8 +1,10 @@
 package com.member_management.controller;
 
+import com.member_management.modules._Member;
 import com.member_management.service.DeviceService;
 import com.member_management.service.UsageInformationService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +43,12 @@ public class UsageInformationController {
             RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
         try {
-            usageInformationService.bookDevice(deviceId, bookingTime);
+            // Lấy session từ request
+            HttpSession session = request.getSession();
+
+            // Lấy thông tin member từ session
+            _Member loggedInMember = (_Member) session.getAttribute("loggedInMember");
+            usageInformationService.bookDevice(loggedInMember.getMaTV(), deviceId, bookingTime);
             redirectAttributes.addFlashAttribute("successMessage", "Đặt chỗ thành công!");
             return "redirect:/booking-device";
         } catch (Exception e) {

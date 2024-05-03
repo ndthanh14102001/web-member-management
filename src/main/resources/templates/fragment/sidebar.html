@@ -24,8 +24,8 @@
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </a>
                             </div>
-                            <h4>Nguyễn Đức Thành</h4>
-                            <p>ndthanh14102001@gmail.com</p>
+                            <h4 th:text="${#ctx.session.loggedInMember.getHoTen()}"></h4>
+                            <p  th:text="${#ctx.session.loggedInMember.getEmail()}"></p>
                         </div>
                         <hr class="hr" />
                         <div class="list-group list-group-flush mx-3 ">
