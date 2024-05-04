@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="/fragment/page.html
+      :: page('Trạng thái vi phạm',~{ :: .content})">
+    <div class="content">
+        <h2>Trạng thái vi phạm</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã xử lý</th>
+                    <th>Tên hình thức xử lý</th>
+                    <th>Số tiền</th>
+                    <th>Ngày xử lý</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="processing : ${processingList}">
+                    <td th:text="${processing.maXL}"></td>
+                    <td th:text="${processing.hinhThucXL}"></td>
+                    <td th:text="${processing.soTien != null && processing.soTien != 0 ? #strings.replace(#strings.replace(#numbers.formatCurrency(processing.soTien), '¤', 'VND'), ',00', '') : ''}"></td>
+                    <td th:text="${#dates.format(processing.ngayXL, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${processing.trangThaiXL == 1 ? 'Đã xử lý' :'Chưa xử lý'}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</html>

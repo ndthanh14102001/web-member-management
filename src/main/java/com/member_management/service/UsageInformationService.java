@@ -76,4 +76,16 @@ public class UsageInformationService {
         List<_UsageInformation> unusedRecords = usageInformationRepository.findUnusedRecordsBeforeTime(oneHourAgo);
         usageInformationRepository.deleteAll(unusedRecords);
     }
+
+    public List<_UsageInformation> getBorrowingDevices(String maTV) {
+        return usageInformationRepository.getNotAvailableDevicesByMaTV(maTV);
+    }
+
+    public List<_UsageInformation> getBookedDevicesByMaTV(String maTV) {
+        return usageInformationRepository.getBookedDevicesByMaTV(maTV);
+    }
+    
+     public void cancelBookedDevice(int maTT) {
+         usageInformationRepository.cancelBookedDevice(maTT);
+    }
 }

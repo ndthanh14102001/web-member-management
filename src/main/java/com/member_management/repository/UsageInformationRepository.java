@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.Date;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UsageInformationRepository extends JpaRepository<_UsageInformation, Integer> {
 
@@ -76,6 +78,33 @@ public interface UsageInformationRepository extends JpaRepository<_UsageInformat
            AND u.maTB.maTB = :maTB
            """)
     List<_UsageInformation> getBusyInformationByMaTB(@Param("maTB") String maTB, @Param("tGDatCho") Date tGDatCho);
+    
+    @Query("""
+    SELECT u
+    FROM _UsageInformation u
+    WHERE u.tGVao IS NULL 
+           AND u.tGMuon IS NOT NULL 
+           AND u.tGTra IS NULL 
+           AND u.maTV.maTV = :maTV
+    """)
+    List<_UsageInformation> getNotAvailableDevicesByMaTV(@Param("maTV") String maTV);
+    
+    @Query("""
+    SELECT u
+    FROM _UsageInformation u
+    WHERE u.tGVao IS NULL 
+           AND u.tGMuon IS NULL 
+           AND u.tGTra IS NULL
+           AND u.tGDatCho IS NOT NULL
+           AND u.maTV.maTV = :maTV
+    ORDER BY u.tGDatCho DESC
+    """)
+    List<_UsageInformation> getBookedDevicesByMaTV(@Param("maTV") String maTV);
+    
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM _UsageInformation u WHERE u.maTT = :maTT")
+    void cancelBookedDevice(@Param("maTT") int maTT);
 
     @Query("SELECT u FROM _UsageInformation u WHERE u.tGDatCho <= :time AND u.tGMuon IS NULL")
     List<_UsageInformation> findUnusedRecordsBeforeTime(@Param("time") LocalDateTime time);

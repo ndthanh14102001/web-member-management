@@ -38,10 +38,44 @@
                                 <i class="fa-solid fa-house"></i>
                                 <span class="ms-1">Home</span>
                             </a>
+                        </div>
+                        <div class="list-group list-group-flush mx-3 ">
+                            <a
+                                href="/processing-status"
+                                class="list-group-item list-group-item-action py-2 ripple "
+                                id="processing-status"
+                                aria-current="true"
+                                >
+                                <i class="fa-solid fa-house"></i>
+                                <span class="ms-1">Trạng thái xử lý</span>
+                            </a>
+                        </div>
+                        <div class="list-group list-group-flush mx-3 ">
+                            <a
+                                href="/borrowing-devices"
+                                class="list-group-item list-group-item-action py-2 ripple "
+                                id="borrowing-devices"
+                                aria-current="true"
+                                >
+                                <i class="fa-solid fa-house"></i>
+                                <span class="ms-1">Thiết bị đang mượn</span>
+                            </a>
+                        </div>
+                        <div class="list-group list-group-flush mx-3 ">
+                            <a
+                                href="/booked-devices"
+                                class="list-group-item list-group-item-action py-2 ripple "
+                                id="booked-devices"
+                                aria-current="true"
+                                >
+                                <i class="fa-solid fa-house"></i>
+                                <span class="ms-1">Thiết bị đang đặt chỗ</span>
+                            </a>
+                        </div>
+                        <div class="list-group list-group-flush mx-3 ">
                             <a href="/booking-device" class="list-group-item list-group-item-action py-2 ripple" id="booking-device">
                                 <i class="fa-solid fa-calendar-days"></i><span class="ms-1">Đặt chỗ</span>
                             </a>
-
 
                         </div>
                     </div>
@@ -54,11 +88,19 @@
             var url = window.location.pathname;
 
             var bookingDevice = document.getElementById("booking-device");
-
-            console.log(url, bookingDevice, url.startsWith("/booking-device"));
+            var borrowingDevice = document.getElementById("borrowing-devices");
+            var bookedDevice = document.getElementById("booked-devices");
+            var processingStatus = document.getElementById("processing-status");
+            console.log(url, bookingDevice, url.startsWith("booking-device"));
 
             if (url.startsWith("/booking-device")) {
                 bookingDevice.classList.add("active");
+            } else if (url.startsWith("/processing-status")) {
+                processingStatus.classList.add("active");
+            } else if (url.startsWith("/borrowing-devices")) {
+                borrowingDevice.classList.add("active");
+            } else if (url.startsWith("/booked-devices")) {
+                bookedDevice.classList.add("active");
             }
         </script>
     </body>

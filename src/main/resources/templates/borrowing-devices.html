@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html th:replace="/fragment/page.html
+      :: page('Thiết bị đang mượn',~{ :: .content})">
+    <div class="content">
+        <h2>Thiết bị đang mượn</h2>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã thiết bị</th>
+                    <th>Tên thiết bị</th>
+                    <th>Thời gian mượn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="borrowingDevice : ${borrowingDevices}">
+                    <td th:text="${borrowingDevice.maTB.maTB}"></td>
+                    <td th:text="${borrowingDevice.maTB.tenTB}"></td>
+                    <td th:text="${#dates.format(borrowingDevice.tGMuon, 'dd-MM-yyyy HH:mm')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</html>

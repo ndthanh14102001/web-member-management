@@ -15,15 +15,17 @@ public class MemberService {
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
+
     public void Register(_Member m) {
         memberRepository.insertMember(m.getMaTV(), m.getHoTen(), m.getEmail(), m.getKhoa(), m.getNganh(), m.getSdt(), m.getPassword());
     }
 
-    public _Member Login(String id, String password){
+    public _Member Login(String id, String password) {
         return memberRepository.Signin(id, password);
     }
+
     public void changePassword(String id, String newPassword) {
-        _Member member = memberRepository.findById(id).orElse(null); 
+        _Member member = memberRepository.findByMaTV(id);
 
         if (member != null) {
             member.setPassword(newPassword);
@@ -31,7 +33,7 @@ public class MemberService {
         } else {
             throw new RuntimeException("Không tìm thấy thành viên với mã " + id);
         }
-    
+
     }
 
     public List<_Member> findAllUsageInformation() {

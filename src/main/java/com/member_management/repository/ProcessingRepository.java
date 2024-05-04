@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProcessingRepository extends JpaRepository<_Processing, Integer> {
 
-    @Query("SELECT p FROM _Processing p JOIN p.maTV m")
+    @Query("SELECT p FROM _Processing p JOIN p.maTV m ORDER BY p.ngayXL DESC")
     List<_Processing> findAllProcessing();
 
     @Query("SELECT COALESCE(SUM(p.soTien), 0) FROM _Processing p")

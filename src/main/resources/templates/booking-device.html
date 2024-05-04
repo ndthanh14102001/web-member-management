@@ -3,12 +3,6 @@
       :: page('Đặt chỗ',~{ :: .content})">
     <div class="content">
         <h2>Đặt chỗ</h2>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Đặt chỗ</li>
-            </ol>
-        </nav>
 
         <form id="bookingForm" class="d-flex align-items-end mb-3 mt-3" method="Get" th:unless="${bookingTime}" onSubmit="submitForm(event)">
             <div class="me-2">
