@@ -93,7 +93,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr th:each="usageInformation : ${usageInformationList}">
                             <td th:text="${device.maTB}"></td>
                             <td th:text="${device.tenTB}"></td>
                             <td th:text="${usageInfomation.tGMuon}"></td>
