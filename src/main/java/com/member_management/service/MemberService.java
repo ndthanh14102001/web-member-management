@@ -21,5 +21,16 @@ public class MemberService {
     public _Member Login(String id, String password){
         return memberRepository.Signin(id, password);
     }
+    public void changePassword(String id, String newPassword) {
+        _Member member = memberRepository.findById(id).orElse(null); 
+
+        if (member != null) {
+            member.setPassword(newPassword);
+            memberRepository.save(member);
+        } else {
+            throw new RuntimeException("Không tìm thấy thành viên với mã " + id);
+        }
+    
+    }
 
 }
