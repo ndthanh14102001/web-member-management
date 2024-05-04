@@ -41,7 +41,7 @@ public class MemberService {
     }
 
     public void updateMember(_Member loggedInMember) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        memberRepository.save(loggedInMember);
     }
 
 }
