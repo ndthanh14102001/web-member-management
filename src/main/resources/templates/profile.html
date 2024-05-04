@@ -43,13 +43,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-            <td th:text="${member.hoTen}"></td>
-            <td th:text="${processing.hinhThucXL}"></td>
-            <td th:text="${processing.ngayXL}"></td>
-            <td th:text="${processing.soTien}"></td>
-            <td th:text="${processing.trangThaiXL}"></td>
-                         </tr>
+                    <tr th:each="processingList : ${processingList}">
+                    <td style="display: none" th:text="${processingList.MaXL}">
+                    <td th:text="${processingList.MaTV.HoTen}"></td>
+                    <td th:text="${processingList.HinhThucXL}"></td>
+                    <td th:text="${processingList.NgayXL}"></td>
+                    <td class="amount" th:text="${processingList.SoTien != null && processingList.SoTien != 0 ? #strings.replace(#strings.replace(#numbers.formatCurrency(processingList.SoTien), '¤', 'VND'), ',00', '') : ''}"></td>
+                    <td th:text="${processingList.TrangThaiXL == 1 ? 'Đã xử lý' : 'Chưa xử lý'}"></td>
+                </tr>
                         <!-- Thêm các hàng dữ liệu khác tương tự ở đây -->
                     </tbody>
                 </table>
