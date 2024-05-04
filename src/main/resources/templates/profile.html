@@ -71,7 +71,7 @@
                     <tbody>
                         <tr th:each="usageInformation : ${usageInformationList}">
                             <td th:text="${usageInfomation.maTB}"></td>
-                            <td th:text="${device.tenTB}"></td>
+                            <td th:text="${usageInfomation.maTB.tenTB}"></td>
                             <td th:text="${usageInfomation.tGVao}"></td>
                         </tr>
                         </tr>
@@ -95,7 +95,7 @@
                     <tbody>
                         <tr th:each="usageInformation : ${usageInformationList}">
                             <td th:text="${usageInfomation.maTB}"></td>
-                            <td th:text="${device.tenTB}"></td>
+                            <td th:text="${usageInfomation.maTB.tenTB}"></td>
                             <td th:text="${usageInfomation.tGMuon}"></td>
                         </tr>
 
