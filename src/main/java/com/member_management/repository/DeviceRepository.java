@@ -12,6 +12,8 @@ public interface DeviceRepository extends JpaRepository<_Device, Integer> {
      * @param maTB
      * @return
      */
+     @Query("FROM _Device d")
+     List<_Device> getAllDevices();
      @Query("SELECT d FROM _Device d WHERE d.maTB = :maTB")
     _Device findByMaTB(@Param("maTB") String maTB);
 }
