@@ -17,4 +17,8 @@ public class DeviceService {
     public _Device findById(String id) {
         return deviceRepository.findByMaTB(id);
     }
+    public List<_Device> findAllDevices() {
+        List<_Device> devices = deviceRepository.getAllDevices();
+        return devices;
+    }
 }

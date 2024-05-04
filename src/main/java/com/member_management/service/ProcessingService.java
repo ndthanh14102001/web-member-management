@@ -15,5 +15,9 @@ public class ProcessingService {
     public ProcessingService(ProcessingRepository processingRepository) {
         this.processingRepository = processingRepository;
     }
+    public List<_Processing> findAllProcessing() {
+        List<_Processing> usageInformations = processingRepository.findAllProcessing();
+        return usageInformations;
+    }
 
 }
