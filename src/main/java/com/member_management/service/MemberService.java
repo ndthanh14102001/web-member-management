@@ -22,9 +22,8 @@ public class MemberService {
     public _Member Login(String id, String password){
         return memberRepository.Signin(id, password);
     }
-     public void changePassword(String id, String newPassword) {
-        _Member member; 
-        member = memberRepository.findById(id).orElse(null);
+    public void changePassword(String id, String newPassword) {
+        _Member member = memberRepository.findById(id).orElse(null); 
 
         if (member != null) {
             member.setPassword(newPassword);
@@ -32,14 +31,15 @@ public class MemberService {
         } else {
             throw new RuntimeException("Không tìm thấy thành viên với mã " + id);
         }
-
-}
-
-    public void updateMember(_Member loggedInMember) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
     }
 
     public List<_Member> findAllUsageInformation() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    public void updateMember(_Member loggedInMember) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
