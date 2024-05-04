@@ -43,14 +43,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-            <td th:text="${member.hoTen}"></td>
-            <td th:text="${processing.hinhThucXL}"></td>
-            <td th:text="${processing.ngayXL}"></td>
-            <td th:text="${processing.soTien}"></td>
-            <td th:text="${processing.trangThaiXL}"></td>
+                            <tr th:each="processingList : ${processingList}">
+                                <td th:text="${member.hoTen}"></td>
+                                <td th:text="${processing.hinhThucXL}"></td>
+                                <td th:text="${processing.ngayXL}"></td>
+                                <td th:text="${processing.soTien}"></td>
+                                <td th:text="${processing.trangThaiXL}"></td>
+                                <td class="amount" th:text="${processingList.SoTien != null && processingList.SoTien != 0 ? #strings.replace(#strings.replace(#numbers.formatCurrency(processingList.SoTien), '¤', 'VND'), ',00', '') : ''}"></td>
+                                <td th:text="${processingList.TrangThaiXL == 1 ? 'Đã xử lý' : 'Chưa xử lý'}"></td>
                          </tr>
-                        <!-- Thêm các hàng dữ liệu khác tương tự ở đây -->
                     </tbody>
                 </table>
             `;
@@ -96,7 +97,6 @@
                             <td th:text="${device.maTB}"></td>
                             <td th:text="${device.tenTB}"></td>
                             <td th:text="${usageInfomation.tGMuon}"></td>
-                            <td>2024-05-03 10:00</td>
                         </tr>
 
                     </tbody>
