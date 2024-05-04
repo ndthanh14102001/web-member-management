@@ -30,9 +30,9 @@
                         <hr class="hr" />
                         <div class="list-group list-group-flush mx-3 ">
                             <a
-                                href="#"
+                                href="/home"
                                 class="list-group-item list-group-item-action py-2 ripple "
-                                id="statistical"
+                                id="home"
                                 aria-current="true"
                                 >
                                 <i class="fa-solid fa-house"></i>
@@ -46,7 +46,7 @@
                                 id="processing-status"
                                 aria-current="true"
                                 >
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fa-solid fa-circle-exclamation"></i>
                                 <span class="ms-1">Trạng thái xử lý</span>
                             </a>
                         </div>
@@ -57,7 +57,7 @@
                                 id="borrowing-devices"
                                 aria-current="true"
                                 >
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fa-solid fa-laptop"></i>
                                 <span class="ms-1">Thiết bị đang mượn</span>
                             </a>
                         </div>
@@ -68,7 +68,7 @@
                                 id="booked-devices"
                                 aria-current="true"
                                 >
-                                <i class="fa-solid fa-house"></i>
+                            <i class="fa-solid fa-clock"></i>
                                 <span class="ms-1">Thiết bị đang đặt chỗ</span>
                             </a>
                         </div>
@@ -84,7 +84,7 @@
                                 id="change-password"
                                 aria-current="true"
                                 >
-                                <i class="fa-solid fa-house"></i>
+                               <i class="fa-solid fa-lock"></i>
                                 <span class="ms-1">Đổi mật khẩu</span>
                             </a>
                         </div>
@@ -97,14 +97,16 @@
         </div>
         <script>
             var url = window.location.pathname;
-
+            var home = document.getElementById("home");
             var bookingDevice = document.getElementById("booking-device");
             var borrowingDevice = document.getElementById("borrowing-devices");
             var bookedDevice = document.getElementById("booked-devices");
             var processingStatus = document.getElementById("processing-status");
             console.log(url, bookingDevice, url.startsWith("booking-device"));
 
-            if (url.startsWith("/booking-device")) {
+            if (url.startsWith("/home")) {
+                home.classList.add("active");
+            } else if (url.startsWith("/booking-device")) {
                 bookingDevice.classList.add("active");
             } else if (url.startsWith("/processing-status")) {
                 processingStatus.classList.add("active");

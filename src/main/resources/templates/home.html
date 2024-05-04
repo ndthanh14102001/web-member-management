@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html th:replace="/fragment/page.html
+      :: page('Đặt chỗ',~{ :: .content})">
+    <div class="content">
+        <h2>Thông tin cá nhân</h2>
+
+        <div class="container">
+            <div class="row gy-3">
+                <div class="col-12">
+                    <strong>Mã thành viên : </strong><span th:text="${loggedInMember.getMaTV()}"></span>
+                </div>
+                <div class="col-12">
+                    <strong>Họ tên : </strong><span th:text="${loggedInMember.getHoTen()}"></span>
+                </div>
+                 <div class="col-12">
+                    <strong>Email : </strong><span th:text="${loggedInMember.getEmail()}"></span>
+                </div>
+                 <div class="col-12">
+                    <strong>Số điện thoại : </strong><span th:text="${loggedInMember.getSdt()}"></span>
+                </div>
+                 <div class="col-12">
+                    <strong>Khoa : </strong><span th:text="${loggedInMember.getKhoa()}"></span>
+                </div>
+                 <div class="col-12">
+                    <strong>Ngành : </strong><span th:text="${loggedInMember.getNganh()}"></span>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</html>
