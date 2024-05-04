@@ -1,8 +1,10 @@
 package com.member_management.service;
 
+import com.member_management.modules._Processing;
 import com.member_management.repository.DeviceRepository;
 import com.member_management.repository.MemberRepository;
 import com.member_management.repository.ProcessingRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,4 @@ public class ProcessingService {
         List<_Processing> usageInformations = processingRepository.findAllProcessing();
         return usageInformations;
     }
-
 }

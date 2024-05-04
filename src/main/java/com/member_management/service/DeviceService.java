@@ -2,6 +2,7 @@ package com.member_management.service;
 
 import com.member_management.modules._Device;
 import com.member_management.repository.DeviceRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

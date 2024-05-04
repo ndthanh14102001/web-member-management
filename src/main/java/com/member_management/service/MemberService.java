@@ -2,6 +2,7 @@ package com.member_management.service;
 
 import com.member_management.modules._Member;
 import com.member_management.repository.MemberRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,14 @@ public class MemberService {
             throw new RuntimeException("Không tìm thấy thành viên với mã " + id);
         }
     
+    }
+
+    public List<_Member> findAllUsageInformation() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void updateMember(_Member loggedInMember) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
