@@ -51,7 +51,7 @@
                     <td class="amount" th:text="${processingList.SoTien != null && processingList.SoTien != 0 ? #strings.replace(#strings.replace(#numbers.formatCurrency(processingList.SoTien), '¤', 'VND'), ',00', '') : ''}"></td>
                     <td th:text="${processingList.TrangThaiXL == 1 ? 'Đã xử lý' : 'Chưa xử lý'}"></td>
                 </tr>
-                        <!-- Thêm các hàng dữ liệu khác tương tự ở đây -->
+               
                     </tbody>
                 </table>
             `;
