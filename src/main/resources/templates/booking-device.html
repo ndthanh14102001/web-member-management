@@ -67,34 +67,33 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    document.querySelector('.toast-container .toast').classList.remove("show");
+                }, 5000);
+            });
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
-                document.querySelector('.toast-container .toast').classList.remove("show");
-            }, 5000);
-        });
-
-        function openModal(button) {
-            var deviceId = button.getAttribute("device-id");
-            var currentDateTime = new Date().toISOString().slice(0, 16).replace("T", " ");
-            document.getElementById('modalBookingTime').min = currentDateTime;
-            document.querySelector("#bookingForm").setAttribute('action', '/book/' + deviceId);
-            var modal = new bootstrap.Modal(document.getElementById('bookingModal'));
-            modal.show();
-        }
-
-        function submitForm(event) {
-
-            var selectedDateTime = new Date(document.getElementById('bookingTime').value);
-
-            var minimumDateTime = new Date();
-            minimumDateTime.setMinutes(minimumDateTime.getMinutes() + 30);
-            if (selectedDateTime < minimumDateTime) {
-                alert('Thời gian đặt chỗ phải sau ít nhất 30 phút so với thời gian hiện tại');
-                event.preventDefault();
+            function openModal(button) {
+                var deviceId = button.getAttribute("device-id");
+                var currentDateTime = new Date().toISOString().slice(0, 16).replace("T", " ");
+                document.getElementById('modalBookingTime').min = currentDateTime;
+                document.querySelector("#bookingForm").setAttribute('action', '/book/' + deviceId);
+                var modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+                modal.show();
             }
-        }
-    </script>
+
+            function submitForm(event) {
+
+                var selectedDateTime = new Date(document.getElementById('bookingTime').value);
+
+                var minimumDateTime = new Date();
+                minimumDateTime.setMinutes(minimumDateTime.getMinutes() + 30);
+                if (selectedDateTime < minimumDateTime) {
+                    alert('Thời gian đặt chỗ phải sau ít nhất 30 phút so với thời gian hiện tại');
+                    event.preventDefault();
+                }
+            }
+        </script>
+    </div>
 </html>
