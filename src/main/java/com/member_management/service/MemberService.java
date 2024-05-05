@@ -3,6 +3,7 @@ package com.member_management.service;
 import com.member_management.modules._Member;
 import com.member_management.repository.MemberRepository;
 import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,12 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private EmailService emailService;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, EmailService emailService) {
         this.memberRepository = memberRepository;
+        this.emailService = emailService;
     }
 
     public void Register(_Member m) throws Exception {
@@ -48,4 +51,18 @@ public class MemberService {
         memberRepository.save(loggedInMember);
     }
 
+    public int sendOTP(String maTV, String email) throws Exception {
+        _Member member = memberRepository.findByMaTVAndEmail(maTV, email);
+        if (member != null) {
+            int otp = randomFiveDigitNumber();
+            emailService.sendSimpleMessage(email, "Reset Password", String.valueOf(otp));
+            return otp;
+        }
+        throw new Exception("Mã thành viên hoặc email không đúng");
+    }
+
+    private int randomFiveDigitNumber() {
+        Random random = new Random();
+        return random.nextInt(90000) + 10000;
+    }
 }

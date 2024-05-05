@@ -26,4 +26,7 @@ public interface MemberRepository extends JpaRepository<_Member, Integer> {
 
     @Query("SELECT m FROM _Member m WHERE m.maTV = :maTV")
     public _Member findByMaTV(@Param("maTV") String id);
+
+    @Query("SELECT m FROM _Member m WHERE m.maTV = :maTV and m.email = :email")
+    public _Member findByMaTVAndEmail(@Param("maTV") String maTV, @Param("email") String email);
 }
