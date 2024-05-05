@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class MemberController {
 
+    public static String LOGGED_IN_MEMBER_ATTRIBUTE = "loggedInMember";
     private final MemberService memberService;
 
     @Autowired
@@ -28,7 +29,9 @@ public class MemberController {
     }
 
     @GetMapping("/signin")
-    public String Signin() {
+    public String Signin(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute("loggedInMember", null);
         return "/signin";
     }
 

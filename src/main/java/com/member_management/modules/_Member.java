@@ -13,8 +13,11 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.Collection;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -154,6 +157,21 @@ public class _Member implements Serializable {
             e.printStackTrace();
             throw new Exception("Mã thành viên phải là số.");
         }
+    }
+
+    public static String checkLoggedIn(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        HttpSession session = request.getSession();
+        try {
+            _Member loggedInMember = (_Member) session.getAttribute("loggedInMember");
+            if (loggedInMember == null) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Phiên đăng nhập đã hết hạn !");
+                return "redirect:/login";
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Phiên đăng nhập đã hết hạn !");
+            return "redirect:/login";
+        }
+        return "";
     }
 
     @Override
