@@ -16,7 +16,11 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public void Register(_Member m) {
+    public void Register(_Member m) throws Exception {
+        m.checkMaTVFormat();
+        if (memberRepository.findByMaTV(m.getMaTV()) != null) {
+            throw new Exception("Mã thành viên đã tồn tại");
+        }
         memberRepository.insertMember(m.getMaTV(), m.getHoTen(), m.getEmail(), m.getKhoa(), m.getNganh(), m.getSdt(), m.getPassword());
     }
 

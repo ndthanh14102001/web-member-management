@@ -144,6 +144,18 @@ public class _Member implements Serializable {
         this.usageInformationCollection = usageInformationCollection;
     }
 
+    public void checkMaTVFormat() throws Exception {
+        if (maTV == null || maTV.length() != 10) {
+            throw new Exception("Mã TV phải có độ dài 10 ký tự.");
+        }
+        try {
+            Long.parseLong(maTV);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            throw new Exception("Mã thành viên phải là số.");
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -168,5 +180,5 @@ public class _Member implements Serializable {
     public String toString() {
         return "com.example.demo.modules._Member[ maTV=" + maTV + " ]";
     }
-    
+
 }

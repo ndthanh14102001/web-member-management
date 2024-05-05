@@ -86,6 +86,7 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("nganh", branch);
             redirectAttributes.addFlashAttribute("sdt", phone);
             redirectAttributes.addFlashAttribute("password", password);
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/signup";
         }
     }
