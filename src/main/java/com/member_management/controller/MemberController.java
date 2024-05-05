@@ -22,6 +22,11 @@ public class MemberController {
         this.memberService = memberService;
     }
 
+    @GetMapping("/")
+    public String showDefaultPage() {
+        return "/signin";
+    }
+
     @GetMapping("/signin")
     public String Signin() {
         return "/signin";
